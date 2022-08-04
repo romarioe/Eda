@@ -18,12 +18,14 @@ class CartTableViewCell: UITableViewCell {
     @IBOutlet weak var incCount: UIButton!
     @IBOutlet weak var decCount: UIButton!
     
+    @IBOutlet weak var comment: UILabel!
+    
     var priceInt: Int = 0
     
     var cartService = CartService()
     
     
-    weak var delegate: DailySpeakingLessonDelegate?
+    weak var delegate: ChangeCountProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,17 +44,15 @@ class CartTableViewCell: UITableViewCell {
     
     
     @IBAction func incCount(_ sender: Any) {
-       // let priceStr = cartPrice.text?.removeLast()
-       // let price = Int(priceStr)
         
-        cartService.addToCart(name: cartName.text ?? "", conut: 1, price: priceInt, comment: "", imageLink: "")
-        delegate?.dailySpeakingLessonButtonPressed()
+        cartService.addToCart(id: 0, name: cartName.text ?? "", conut: 1, price: priceInt, comment: comment.text ?? "", imageLink: "")
+        delegate?.changeCountButtonPressed()
     }
     
     
     @IBAction func decCount(_ sender: Any) {
         cartService.removeFromCart(name: cartName.text ?? "", price: priceInt)
-        delegate?.dailySpeakingLessonButtonPressed()
+        delegate?.changeCountButtonPressed()
     }
     
     

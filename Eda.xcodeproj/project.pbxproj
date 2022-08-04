@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		A039EA4728858331001031CE /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A039EA4628858331001031CE /* ContactsViewController.swift */; };
+		A03E91A6288EC42A00B09098 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03E91A5288EC42A00B09098 /* OrderModel.swift */; };
+		A03E91AC288FDFF000B09098 /* UIView + Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03E91AB288FDFF000B09098 /* UIView + Shadow.swift */; };
+		A03E91AF28901B3500B09098 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03E91AE28901B3500B09098 /* ProfileTableViewController.swift */; };
+		A03E91B128901E6900B09098 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03E91B028901E6900B09098 /* ProfileViewController.swift */; };
+		A03E91B52890226100B09098 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03E91B42890226100B09098 /* UserModel.swift */; };
+		A03E91B72890230900B09098 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03E91B62890230900B09098 /* ProfileService.swift */; };
 		A0489545287FFA4C009E5F3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0489544287FFA4C009E5F3B /* AppDelegate.swift */; };
 		A0489547287FFA4C009E5F3B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0489546287FFA4C009E5F3B /* SceneDelegate.swift */; };
 		A0489549287FFA4C009E5F3B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0489548287FFA4C009E5F3B /* MenuViewController.swift */; };
@@ -24,11 +30,15 @@
 		A048957328804B82009E5F3B /* MenuInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A048957228804B82009E5F3B /* MenuInputDelegate.swift */; };
 		A04895752880507F009E5F3B /* MenuOutputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04895742880507F009E5F3B /* MenuOutputDelegate.swift */; };
 		A049F85E2885987A00AE5577 /* CartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049F85D2885987A00AE5577 /* CartService.swift */; };
-		A049F8602885988A00AE5577 /* CartModel4.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049F85F2885988A00AE5577 /* CartModel4.swift */; };
+		A049F8602885988A00AE5577 /* CartModel5.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049F85F2885988A00AE5577 /* CartModel5.swift */; };
 		A049F8632885A38200AE5577 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049F8622885A38200AE5577 /* CartViewController.swift */; };
 		A049F8672885A82000AE5577 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049F8662885A82000AE5577 /* CartTableViewCell.swift */; };
 		A0D0700128815B3D00DC546D /* MenuDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D0700028815B3D00DC546D /* MenuDetailModel.swift */; };
 		A0D0700428815CB700DC546D /* MenuDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D0700328815CB700DC546D /* MenuDetailViewController.swift */; };
+		A0E4803328927E0E001932A8 /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4803228927E0E001932A8 /* ResponseModel.swift */; };
+		A0E4803628928298001932A8 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4803528928298001932A8 /* OrderTableViewCell.swift */; };
+		A0E4803828928B11001932A8 /* OrderRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4803728928B11001932A8 /* OrderRealmModel.swift */; };
+		A0E4803A28928B95001932A8 /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4803928928B95001932A8 /* OrderService.swift */; };
 		C2C174EEDF89D59607ED2B83 /* Pods_Eda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 069E621361C6DD8B4E5194C1 /* Pods_Eda.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +47,12 @@
 		19D68FC600839FE5516FC2E7 /* Pods-Eda.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eda.debug.xcconfig"; path = "Target Support Files/Pods-Eda/Pods-Eda.debug.xcconfig"; sourceTree = "<group>"; };
 		9FBDF20964A95C84E6395D50 /* Pods-Eda.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eda.release.xcconfig"; path = "Target Support Files/Pods-Eda/Pods-Eda.release.xcconfig"; sourceTree = "<group>"; };
 		A039EA4628858331001031CE /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		A03E91A5288EC42A00B09098 /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
+		A03E91AB288FDFF000B09098 /* UIView + Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow.swift"; sourceTree = "<group>"; };
+		A03E91AE28901B3500B09098 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		A03E91B028901E6900B09098 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		A03E91B42890226100B09098 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		A03E91B62890230900B09098 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		A0489541287FFA4C009E5F3B /* Eda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0489544287FFA4C009E5F3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0489546287FFA4C009E5F3B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,11 +71,15 @@
 		A048957228804B82009E5F3B /* MenuInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInputDelegate.swift; sourceTree = "<group>"; };
 		A04895742880507F009E5F3B /* MenuOutputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOutputDelegate.swift; sourceTree = "<group>"; };
 		A049F85D2885987A00AE5577 /* CartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartService.swift; sourceTree = "<group>"; };
-		A049F85F2885988A00AE5577 /* CartModel4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartModel4.swift; sourceTree = "<group>"; };
+		A049F85F2885988A00AE5577 /* CartModel5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartModel5.swift; sourceTree = "<group>"; };
 		A049F8622885A38200AE5577 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		A049F8662885A82000AE5577 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 		A0D0700028815B3D00DC546D /* MenuDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailModel.swift; sourceTree = "<group>"; };
 		A0D0700328815CB700DC546D /* MenuDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailViewController.swift; sourceTree = "<group>"; };
+		A0E4803228927E0E001932A8 /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		A0E4803528928298001932A8 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		A0E4803728928B11001932A8 /* OrderRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRealmModel.swift; sourceTree = "<group>"; };
+		A0E4803928928B95001932A8 /* OrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +119,24 @@
 			path = Contacts;
 			sourceTree = "<group>";
 		};
+		A03E91A9288FDEDE00B09098 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				A03E91AE28901B3500B09098 /* ProfileTableViewController.swift */,
+				A03E91B028901E6900B09098 /* ProfileViewController.swift */,
+				A0E4803528928298001932A8 /* OrderTableViewCell.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		A03E91AA288FDFC900B09098 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A03E91AB288FDFF000B09098 /* UIView + Shadow.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A0489538287FFA4C009E5F3B = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +158,7 @@
 		A0489543287FFA4C009E5F3B /* Eda */ = {
 			isa = PBXGroup;
 			children = (
+				A03E91AA288FDFC900B09098 /* Extensions */,
 				A048956B288038B8009E5F3B /* Services */,
 				A0489566288035F0009E5F3B /* Model */,
 				A048955B288009E4009E5F3B /* ViewControllers */,
@@ -141,6 +180,7 @@
 				A039EA452885831A001031CE /* Contacts */,
 				A0D0700228815C9C00DC546D /* MenuDetail */,
 				A048957128804B5A009E5F3B /* Menu */,
+				A03E91A9288FDEDE00B09098 /* Profile */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -151,7 +191,11 @@
 				A04895672880360D009E5F3B /* MenuModel.swift */,
 				A04895692880361F009E5F3B /* CategoriesModel.swift */,
 				A0D0700028815B3D00DC546D /* MenuDetailModel.swift */,
-				A049F85F2885988A00AE5577 /* CartModel4.swift */,
+				A049F85F2885988A00AE5577 /* CartModel5.swift */,
+				A0E4803728928B11001932A8 /* OrderRealmModel.swift */,
+				A03E91A5288EC42A00B09098 /* OrderModel.swift */,
+				A03E91B42890226100B09098 /* UserModel.swift */,
+				A0E4803228927E0E001932A8 /* ResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -161,6 +205,8 @@
 			children = (
 				A048956C28803925009E5F3B /* NetworkService.swift */,
 				A049F85D2885987A00AE5577 /* CartService.swift */,
+				A03E91B62890230900B09098 /* ProfileService.swift */,
+				A0E4803928928B95001932A8 /* OrderService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -339,19 +385,29 @@
 				A048955D28800A05009E5F3B /* CategoryCollectionViewCell.swift in Sources */,
 				A048956428800EF8009E5F3B /* MenuTableViewCell.swift in Sources */,
 				A048957328804B82009E5F3B /* MenuInputDelegate.swift in Sources */,
+				A03E91B72890230900B09098 /* ProfileService.swift in Sources */,
 				A048957028804B28009E5F3B /* MenuPresenter.swift in Sources */,
 				A0D0700128815B3D00DC546D /* MenuDetailModel.swift in Sources */,
+				A03E91B52890226100B09098 /* UserModel.swift in Sources */,
 				A049F85E2885987A00AE5577 /* CartService.swift in Sources */,
 				A04895682880360D009E5F3B /* MenuModel.swift in Sources */,
+				A0E4803A28928B95001932A8 /* OrderService.swift in Sources */,
 				A0489545287FFA4C009E5F3B /* AppDelegate.swift in Sources */,
-				A049F8602885988A00AE5577 /* CartModel4.swift in Sources */,
+				A049F8602885988A00AE5577 /* CartModel5.swift in Sources */,
 				A048954F287FFA4C009E5F3B /* Eda.xcdatamodeld in Sources */,
+				A03E91A6288EC42A00B09098 /* OrderModel.swift in Sources */,
 				A0489547287FFA4C009E5F3B /* SceneDelegate.swift in Sources */,
 				A049F8672885A82000AE5577 /* CartTableViewCell.swift in Sources */,
+				A03E91B128901E6900B09098 /* ProfileViewController.swift in Sources */,
 				A048956A2880361F009E5F3B /* CategoriesModel.swift in Sources */,
 				A0D0700428815CB700DC546D /* MenuDetailViewController.swift in Sources */,
+				A0E4803328927E0E001932A8 /* ResponseModel.swift in Sources */,
 				A048956D28803925009E5F3B /* NetworkService.swift in Sources */,
+				A03E91AC288FDFF000B09098 /* UIView + Shadow.swift in Sources */,
 				A049F8632885A38200AE5577 /* CartViewController.swift in Sources */,
+				A0E4803628928298001932A8 /* OrderTableViewCell.swift in Sources */,
+				A03E91AF28901B3500B09098 /* ProfileTableViewController.swift in Sources */,
+				A0E4803828928B11001932A8 /* OrderRealmModel.swift in Sources */,
 				A039EA4728858331001031CE /* ContactsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -31,14 +31,14 @@ extension MenuPresenter: MenuOutputDelegate{
     }
     
     func getCategories() {
-        networkService.getCategories { categories in
-            guard let categories = categories else {
-                return
-            }
+//        networkService.getCategories { categories in
+//            guard let categories = categories else {
+//                return
+//            }
            
           //  guard let ctegoriesForDisplay = self.makeCategoriesForDisplay(categories: categories) else {return}
           //  self.menuInputDelegate?.setupCategories(categories: ctegoriesForDisplay)
-        }
+ //       }
     }
     
     
@@ -99,7 +99,6 @@ extension MenuPresenter: MenuOutputDelegate{
                 
            
         }
-        print ("Array = ", returnArray)
         return returnArray
     }
     

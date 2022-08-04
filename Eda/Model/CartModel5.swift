@@ -8,12 +8,12 @@
 import Foundation
 import RealmSwift
 
-class CartModel4: Object {
+class CartModel5: Object {
 //    Comparable
 //    static func < (lhs: HistoryVisitedThreadsRealm, rhs: HistoryVisitedThreadsRealm) -> Bool {
 //        return lhs.timestamp < rhs.timestamp
 //    }
- 
+    @objc dynamic var id = 0
     @objc dynamic var name = ""
     @objc dynamic var count = 0
     @objc dynamic var totalPrice = 0

@@ -11,20 +11,22 @@ import RealmSwift
 class CartService{
     
 
-    var cartModel: Results<CartModel4>!
+    var cartModel: Results<CartModel5>!
     let realm = try! Realm()
     
-    func addToCart(name: String, conut: Int, price: Int, comment: String, imageLink: String){
+    func addToCart(id: Int, name: String, conut: Int, price: Int, comment: String, imageLink: String){
         
 
-        if let index = self.chechExistItemInCart(name: name) {
-            let existCartModel = realm.objects(CartModel4.self)
+        if let index = self.chechExistItemInCart(name: name, comment: comment) {
+            let existCartModel = realm.objects(CartModel5.self)
             try! realm.write {
+                existCartModel[index].id = id
                 existCartModel[index].count += 1
                 existCartModel[index].totalPrice += price
             }
         } else {
-            let cartModel = CartModel4()
+            let cartModel = CartModel5()
+            cartModel.id = id
             cartModel.name = name
             cartModel.count = conut
             cartModel.price = price
@@ -43,14 +45,14 @@ class CartService{
     
     
     
-    func chechExistItemInCart(name: String) -> Int?{
+    func chechExistItemInCart(name: String, comment: String) -> Int?{
         var returnIndex: Int?
         let realm = try! Realm()
         
-        cartModel = realm.objects(CartModel4.self)
+        cartModel = realm.objects(CartModel5.self)
         
         for (index, value) in cartModel.enumerated(){
-            if value.name == name {
+            if value.name == name && value.comment == comment {
                 returnIndex = index
             }
         }
@@ -61,7 +63,7 @@ class CartService{
     
     func getTotalPrice()->Int{
         var totalPrice = 0
-        cartModel = realm.objects(CartModel4.self)
+        cartModel = realm.objects(CartModel5.self)
         for (_, value) in cartModel.enumerated(){
             totalPrice = totalPrice + value.totalPrice
         }
@@ -71,9 +73,8 @@ class CartService{
     
     
     func removeFromCart(name: String, price: Int){
-        print ("remoive")
-        
-        cartModel = realm.objects(CartModel4.self)
+ 
+        cartModel = realm.objects(CartModel5.self)
         
         for (index, value) in cartModel.enumerated(){
             if value.name == name {
@@ -89,11 +90,9 @@ class CartService{
                         self.realm.delete(cartModel[index])
                     
                     }
-                    
                 }
             }
         }
-        
     }
     
     
@@ -101,7 +100,7 @@ class CartService{
     
     
     func removeAllCart(){
-        cartModel = realm.objects(CartModel4.self)
+        cartModel = realm.objects(CartModel5.self)
         
         try! self.realm.write {
             self.realm.delete(self.cartModel)

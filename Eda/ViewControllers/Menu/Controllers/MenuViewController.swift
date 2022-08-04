@@ -26,13 +26,14 @@ class MenuViewController: UIViewController {
     
     var totalPrice: Int = 0
     
+    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         
         presenter.setMenuInputDelegate(menuInputDelegate: self)
         self.menuOutputDelegate = presenter
-        //self.menuOutputDelegate?.getCategories()
         self.menuOutputDelegate?.getMenu()
        
     }
@@ -42,15 +43,22 @@ class MenuViewController: UIViewController {
         return .lightContent
     }
     
+    func showActivityIndicator(){
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
+    }
+    
     
     
     func setupUI(){
+        showActivityIndicator()
         phoneButton.layer.cornerRadius = 15
         phoneButton.dropShadow()
     
         profileButton.layer.cornerRadius = 15
         profileButton.dropShadow()
-        
         
         tabBarController?.tabBar.tintColor = UIColor.black
         tabBarController?.tabBar.unselectedItemTintColor = UIColor.darkGray
@@ -61,8 +69,7 @@ class MenuViewController: UIViewController {
 
     }
     
-    
-    
+ 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "menuDetailSegue" {
@@ -71,8 +78,7 @@ class MenuViewController: UIViewController {
         }
     }
     
-    
-    
+  
     
     override func viewWillAppear(_ animated: Bool) {
         self.menuOutputDelegate?.getTotalPrice()
@@ -94,7 +100,6 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-
         let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCollectionViewCell
         cell.categoryName.text = categories?[indexPath.row].name ?? ""
         cell.layer.cornerRadius = 15
@@ -110,8 +115,6 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.contentView.backgroundColor = #colorLiteral(red: 0.9417033245, green: 0.7470910757, blue: 0.1306448477, alpha: 1)
             }
         }
-        
-        
         return cell
     }
     
@@ -122,7 +125,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if indexPath.row > 0 {
             var position = 0
             guard let categories = categories else {return}
-            
+            activeCategory = categories[indexPath.row].name
             for i in 0...indexPath.row-1{
                 position = position+categories[i].count
             }
@@ -130,18 +133,16 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             menuTableView.scrollToRow(at: [0,position], at: .top, animated: true)
             print ("Position = ", position)
         } else {
-            menuTableView.scrollToRow(at: [0,0], at: .middle, animated: true)
+            guard let categories = categories else {return}
+            let indexPath = IndexPath(item: 0, section: 0)
+            activeCategory = categories[indexPath.row].name
+            menuTableView.scrollToRow(at: [0,0], at: .top, animated: true)
         }
-        
-        let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCollectionViewCell
-        cell.contentView.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
-       
-
-        
+        scrollCategoryToSelection(activeCategory: activeCategory)
     }
-    
-    
 }
+
+
 
 
 extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
@@ -161,13 +162,13 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
         cell.frame = cellRect
         cell.selectionStyle = .none
         
-        
-        
+
         if let menu = menu {
         
             cell.menuName.text = menu[indexPath.row].name
             cell.menuPrice.text = menu[indexPath.row].price + "₽"
-            cell.menuDescription.text = menu[indexPath.row].description
+            let description =  menu[indexPath.row].description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+            cell.menuDescription.text = description
             if let imageURL = URL(string: menu[indexPath.row].images[0].src) {
                 cell.menuImage.sd_setImage(with: imageURL)
             } else {
@@ -178,26 +179,48 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
         return cell
     }
     
+
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let firstVisibleIndexPath = menuTableView.indexPathsForVisibleRows?[2]
-        guard let menu = menu else {return}
-       highliteCollectionView(with: menu[firstVisibleIndexPath!.row].categories[0].name)
+ 
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView is UITableView {
+            startScroll()
+        }
     }
     
     
-//
-//   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        let firstVisibleIndexPath = menuTableView.indexPathsForVisibleRows?[0]
-//        guard let menu = menu else {return}
-//       highliteCollectionView(with: menu[firstVisibleIndexPath!.row].categories[0].name)
-//    }
     
     
-    func highliteCollectionView(with categoryName: String){
-        activeCategory = categoryName
-        DispatchQueue.main.async {
-            self.categoryCollectionView.reloadData()
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView is UITableView {
+            startScroll()
+        }
+    }
+    
+    
+    
+    func startScroll(){
+        let firstVisibleIndexPath = menuTableView.indexPathsForVisibleRows?[1]
+        guard let menu = menu else {return}
+        scrollCategoryToSelection(activeCategory: menu[firstVisibleIndexPath!.row].categories[0].name)
+    }
+    
+    
+        
+    func scrollCategoryToSelection(activeCategory: String){
+        self.activeCategory = activeCategory
+        guard let categories = categories else {return}
+        
+        for (index, value) in categories.enumerated(){
+            if value.name == activeCategory {
+                let indexPath = IndexPath(item: index, section: 0)
+                
+                self.categoryCollectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: false)
+                
+                DispatchQueue.main.async {
+                    self.categoryCollectionView.reloadData()
+                }
+            }
         }
     }
     
@@ -205,30 +228,22 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let menu = menu else {return}
-        menuDetail = MenuDetail(name: menu[indexPath.row].name, description: menu[indexPath.row].description, imageLink: menu[indexPath.row].images[0].src, price: menu[indexPath.row].price)
+        
+        var options: [String] = []
+        if !menu[indexPath.row].attributes.isEmpty {
+            options = menu[indexPath.row].attributes[0].options
+            
+        }
+        
+        let description =  menu[indexPath.row].description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        menuDetail = MenuDetail(id: menu[indexPath.row].id, name: menu[indexPath.row].name, description: description, imageLink: menu[indexPath.row].images[0].src, price: menu[indexPath.row].price, options: options)
+        
         performSegue(withIdentifier: "menuDetailSegue", sender: nil)
     }
-    
-    
-    
-    
+  
 }
 
 
-
-
-extension UIView {
-
-    func dropShadow() {
-        layer.shadowOpacity = 0.2
-        layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-        layer.shadowRadius = 7.0
-        layer.shadowColor = UIColor.black.cgColor
-        layer.masksToBounds = false
-    }
-    
-    
-}
 
 
 
@@ -257,20 +272,12 @@ extension MenuViewController: MenuInputDelegate{
         self.menu = menu
         DispatchQueue.main.async {
             self.menuTableView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
     }
 }
 
 
 
-extension UIView {
-  func animateColor(toColor: UIColor, duration: Double) {
-    let animation = CABasicAnimation(keyPath: "backgroundColor")
-      animation.fromValue = layer.backgroundColor
-    animation.toValue = toColor.cgColor
-    animation.duration = duration
-    layer.add(animation, forKey: "backgroundColor")
-    layer.borderColor = toColor.cgColor
-  }
-}
+
 
