@@ -66,7 +66,16 @@ class MenuViewController: UIViewController {
     
     
     @IBAction func callButton(_ sender: Any) {
-
+        callNumber(phoneNumber: "88005553535")
+    }
+    
+    
+    private func callNumber(phoneNumber: String) {
+        guard let url = URL(string: "telprompt://\(phoneNumber)"),
+            UIApplication.shared.canOpenURL(url) else {
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
  

@@ -34,5 +34,6 @@ struct LineItems: Decodable{
     let id: Int
     let name: String
     let quantity: Int
+    let total: String
     
 }

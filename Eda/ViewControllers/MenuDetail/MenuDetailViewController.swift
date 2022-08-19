@@ -44,7 +44,18 @@ class MenuDetailViewController: UIViewController {
       
         let filtersSegment = UISegmentedControl(items: menuDetail.options)
         let frame = UIScreen.main.bounds
-        filtersSegment.frame = CGRect.init(x: frame.width/2-150, y: frame.height-200, width: 300, height: 40)
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        
+        if screenSize.height < 650 {
+            filtersSegment.frame = CGRect.init(x: frame.width/2-150, y: frame.height-120, width: 300, height: 40)
+        } else {
+            filtersSegment.frame = CGRect.init(x: frame.width/2-150, y: frame.height-180, width: 300, height: 40)
+        }
+        
+      
+        
+        //filtersSegment.frame = CGRect.init(x: frame.width/2-150, y: frame.height-130, width: 300, height: 40)
         filtersSegment.selectedSegmentIndex = 0
         filtersSegment.tintColor = UIColor.black
         filtersSegment.addTarget(self, action: #selector(self.filterApply), for: UIControl.Event.valueChanged)

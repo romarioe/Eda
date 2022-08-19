@@ -74,15 +74,14 @@ class NetworkService {
     
     let orderURL = URL(string: "https://eda2.dmgug.ru/wp-json/wc/v3/orders?consumer_key=ck_6e74b6e68b07e8062ce720466eeedce0f58666df&consumer_secret=cs_2302605eb51d44add296261c2c17257a5720fa82")!
     
-    
 
-    func postOrder(items: [OrderItem], completion: @escaping (ResponseModel?) -> Void) {
+    func postOrder(items: [OrderItem], delivery: Bool, completion: @escaping (ResponseModel?) -> Void) {
         
         userModel = realm.objects(UserModel.self)
        
         
         let encoder = JSONEncoder()
-        //let jsonData = try! encoder.encode(items)
+        
         
         let billing = Billing(first_name: userModel[0].name,
                               last_name: userModel[0].lastName,
@@ -95,25 +94,15 @@ class NetworkService {
                               email: userModel[0].email,
                               phone: userModel[0].phone)
         
-        let shipping = Shipping(first_name: userModel[0].name,
-                                last_name: userModel[0].lastName,
-                                address_1: "Улица " + userModel[0].street,
-                                address_2: "Дом " + userModel[0].house + " Подъезд " + userModel[0].entrance + " Квартира " + userModel[0].flat,
-                                city: userModel[0].city,
-                                state: "",
-                                postcode: "",
-                                country: "Россия")
         
-       let shippingLines = ShipingLines(method_id: "flat_rate", method_title: "Flat Rate", total: "10.00")
+        guard let shipping = setDeliveryInfo(delivery: delivery) else {return}
+        
+        guard let shippingLines = setDeviveryPrice(delivery: delivery) else {return}
         
         let order = Order(paymentMethod: "bacs", paymentMethodTitle: "Direct Bank Transfer", setPaid: true, billing: billing, shipping: shipping, lineItems: items, shippingLines: [shippingLines])
         
-        
-        
-        let jsonData = try! encoder.encode(order)
-        
-        
 
+        let jsonData = try! encoder.encode(order)
 
         var request = URLRequest(url: orderURL)
         
@@ -132,13 +121,52 @@ class NetworkService {
             
             let responseData = try? jsonDecoder.decode(ResponseModel.self, from: data)
             completion (responseData)
+        }
+        task.resume()
+    }
+    
+    
+    func setDeliveryInfo(delivery: Bool) -> Shipping?{
+        var shipping: Shipping?
+        if delivery{
+            shipping = Shipping(first_name: userModel[0].name,
+                                last_name: userModel[0].lastName,
+                                address_1: "Улица " + userModel[0].street,
+                                address_2: "Дом " + userModel[0].house + " Подъезд " + userModel[0].entrance + " Квартира " + userModel[0].flat,
+                                city: userModel[0].city,
+                                state: "",
+                                postcode: "",
+                                country: "Россия")
+        } else {
+            
+            shipping = Shipping(first_name: "",
+                                last_name: "",
+                                address_1: "Самовывоз",
+                                address_2: "",
+                                city: "",
+                                state: "",
+                                postcode: "",
+                                country: "")
             
         }
-
-        task.resume()
-
-
+        return shipping
     }
+    
+    
+    func setDeviveryPrice(delivery: Bool) -> ShipingLines?{
+        var shippingLines: ShipingLines?
+        if delivery {
+             shippingLines = ShipingLines(method_id: "flat_rate", method_title: "Flat Rate", total: "10.00")
+        } else {
+            shippingLines = ShipingLines(method_id: "flat_rate", method_title: "Flat Rate", total: "0")
+        }
+        
+        return shippingLines
+    }
+    
+    
+    
+    
     
     
     
@@ -148,7 +176,6 @@ class NetworkService {
         let strId = String(id)
         let statusURL = URL(string: "https://eda2.dmgug.ru/wp-json/wc/v3/orders/" + strId + "?consumer_key=ck_6e74b6e68b07e8062ce720466eeedce0f58666df&consumer_secret=cs_2302605eb51d44add296261c2c17257a5720fa82")!
         
-        
         let task = URLSession.shared.dataTask(with: statusURL) { (data, _, _) in
             
             guard let data = data else {
@@ -156,15 +183,12 @@ class NetworkService {
                 return
             }
             
-            
             let jsonDecoder = JSONDecoder()
             
             let responseModel = try? jsonDecoder.decode(ResponseModel.self, from: data)
             completion (responseModel)
         }
         task.resume()
-        
-        
     }
     
     

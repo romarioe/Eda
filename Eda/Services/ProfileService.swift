@@ -47,6 +47,17 @@ class ProfileService{
             self.realm.delete(self.userModel)
         }
     }
+    
+    
+    
+    func existUserInfo() -> Bool{
+        var returnValue = false
+        userModel = realm.objects(UserModel.self)
+        if !userModel.isEmpty {
+           returnValue = true
+        }
+        return returnValue
+    }
 
     
     

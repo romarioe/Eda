@@ -2,23 +2,25 @@
 //  OrderTableViewCell.swift
 //  Eda
 //
-//  Created by Roman Efimov on 28.07.2022.
+//  Created by Roman Efimov on 10.08.2022.
 //
+
 
 import UIKit
 
 class OrderTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var orderLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+
     
-    @IBOutlet weak var statusButton: UIButton!
-    
+    @IBOutlet weak var orderImage: UIImageView!
+    @IBOutlet weak var orderName: UILabel!
+    @IBOutlet weak var orderPrice: UILabel!
+    @IBOutlet weak var orderCount: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        statusButton.layer.cornerRadius = 15
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -26,5 +28,13 @@ class OrderTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+
+    
+    
+    
+  
+    
+    
 
 }

@@ -32,19 +32,9 @@ class ProfileTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        nameField.delegate = self
-        lastNameField.delegate = self
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))) //Скрываем клавиатуру
         phoneField.delegate = self
-        emailField.delegate = self
-        cityField.delegate = self
-        streetField.delegate = self
-        houseField.delegate = self
-        entranceField.delegate = self
-        flatField.delegate = self
         
         phoneField.keyboardType = .numberPad
         
@@ -83,15 +73,18 @@ class ProfileTableViewController: UITableViewController {
     
     func setData(){
         userModel = realm.objects(UserModel.self)
-        nameField.text = userModel[0].name
-        lastNameField.text = userModel[0].lastName
-        phoneField.text = userModel[0].phone
-        emailField.text = userModel[0].email
-        cityField.text = userModel[0].city
-        streetField.text = userModel[0].street
-        houseField.text = userModel[0].house
-        entranceField.text = userModel[0].entrance
-        flatField.text = userModel[0].flat
+        if !userModel.isEmpty {
+            nameField.text = userModel[0].name
+            lastNameField.text = userModel[0].lastName
+            phoneField.text = userModel[0].phone
+            emailField.text = userModel[0].email
+            cityField.text = userModel[0].city
+            streetField.text = userModel[0].street
+            houseField.text = userModel[0].house
+            entranceField.text = userModel[0].entrance
+            flatField.text = userModel[0].flat
+        }
+       
     }
     
     
@@ -153,26 +146,27 @@ class ProfileTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 2
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        switch(section) {
-            case 0: return 4
-            case 1: return 3
-            default: fatalError("Unknown number of sections")
-            }
-    }
-    
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 2
+//    }
+//
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        // #warning Incomplete implementation, return the number of rows
+//        switch(section) {
+//            case 0: return 4
+//            case 1: return 3
+//            default: fatalError("Unknown number of sections")
+//            }
+//    }
+//
     
     
     @IBAction func saveButton(_ sender: Any) {
         validData()
     }
     
+
    
 
 }
@@ -188,15 +182,18 @@ extension String {
 
 
 
+
 extension ProfileTableViewController: UITextFieldDelegate{
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true;
     }
     
+    
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let fullString = (textField.text ?? "") + string
-        textField.text = format(phoneNumber: fullString, shouldRemoveLastDigit: range.length == 1)
+        let fullString = (phoneField.text ?? "") + string
+          phoneField.text = format(phoneNumber: fullString, shouldRemoveLastDigit: range.length == 1)
         return false
     }
 }

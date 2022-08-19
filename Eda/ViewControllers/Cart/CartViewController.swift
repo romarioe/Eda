@@ -16,8 +16,13 @@ class CartViewController: UIViewController {
     var cartService = CartService()
     var orderService = OrderService()
     let networkService = NetworkService()
+    let profileService = ProfileService()
+    
+    var order: ResponseModel?
     
     var cart: [OrderItem] = []
+    
+    var delivery: Bool = false
 
 
     @IBOutlet weak var clButton: UIButton!
@@ -25,6 +30,8 @@ class CartViewController: UIViewController {
     @IBOutlet weak var sendOrder: UIButton!
     @IBOutlet weak var cartHeader: UILabel!
     @IBOutlet weak var removeAllCartButton: UIButton!
+    
+    @IBOutlet weak var deliveryControl: UISegmentedControl!
     
     
     let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
@@ -110,12 +117,16 @@ class CartViewController: UIViewController {
     
     func updateUI(){
         if cartModel.isEmpty{
+            deliveryControl.isEnabled = false
+            deliveryControl.isHidden = true
             sendOrder.isEnabled = false
             sendOrder.isHidden = true
             cartHeader.text = "     В вашей корзине пока нет заказов..."
             removeAllCartButton.isEnabled = false
             removeAllCartButton.isHidden = true
         } else {
+            deliveryControl.isEnabled = true
+            deliveryControl.isHidden = false
             sendOrder.isEnabled = true
             sendOrder.isHidden = false
             cartHeader.text = ""
@@ -128,17 +139,65 @@ class CartViewController: UIViewController {
     
     
     
-    @IBAction func sendOrder(_ sender: Any) {
-        showActivityIndicator()
-        networkService.postOrder(items: cart) { response in
-            guard let response = response else {return}
-            DispatchQueue.main.async { [self] in
-                self.orderService.addToOrders(id: response.id)
-                self.removeAllCart()
-                activityIndicator.stopAnimating()
-            }
+    @IBAction func deliverySelect(_ sender: Any) {
+        
+        switch (sender as AnyObject).selectedSegmentIndex {
+        case 0:
+            delivery = false
+        case 1:
+            delivery = true
             
+        default:
+            break;
+        }
+    }
+    
+    
+    
+    
+    
+    @IBAction func sendOrder(_ sender: Any) {
+
+        if profileService.existUserInfo() {
+            //        showActivityIndicator()
+            //        networkService.postOrder(items: cart, delivery: delivery) { response in
+            //            guard let response = response else {return}
+            //            self.order = response
+            //            DispatchQueue.main.async { [self] in
+            //                self.orderService.addToOrders(id: response.id)
+            //                self.removeAllCart()
+            //                activityIndicator.stopAnimating()
+            //                performSegue(withIdentifier: "orderDetailSegueFromCart", sender: nil)
+            //            }
+            //
+            //
+            //        }
+            
+        } else {
+            let alert = UIAlertController(title: "", message: "Для того чтобы сделать заказ, пожалуйста, заполните контактную информацию в разделе «Профиль»", preferredStyle: UIAlertController.Style.alert)
            
+            let ok = UIAlertAction(title: "Заполнить", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+                
+                self.performSegue(withIdentifier: "profileFromCart", sender: nil)
+                
+
+                })
+                alert.addAction(ok)
+                ok.setValue(#colorLiteral(red: 0.9417033245, green: 0.7470910757, blue: 0.1306448477, alpha: 1), forKey: "titleTextColor")
+            
+            let cancel = UIAlertAction(title: "Отмена", style: UIAlertAction.Style.default, handler: nil)
+            alert.addAction(cancel)
+            cancel.setValue(#colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1), forKey: "titleTextColor")
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "orderDetailSegueFromCart" {
+            let destinationVC = segue.destination as! OrderViewController
+            destinationVC.orderModel = order
         }
     }
     
@@ -180,6 +239,8 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource, Change
         
         return cell
     }
+    
+    
     
     
     func changeCountButtonPressed() {
