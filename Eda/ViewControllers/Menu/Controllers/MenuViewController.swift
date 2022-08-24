@@ -19,7 +19,7 @@ class MenuViewController: UIViewController {
     weak private var  menuOutputDelegate: MenuOutputDelegate?
     
     private var categories: [Categories]?
-    private var menu: [Menu]?
+    private var menu: [MenuForDisplay]?
     private var activeCategory: String = ""
     
     private var menuDetail: MenuDetail?
@@ -175,7 +175,7 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
         if let menu = menu {
         
             cell.menuName.text = menu[indexPath.row].name
-            cell.menuPrice.text = menu[indexPath.row].price + "₽"
+            cell.menuPrice.text = menu[indexPath.row].price[0] + "₽"
             let description =  menu[indexPath.row].description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
             cell.menuDescription.text = description
             if let imageURL = URL(string: menu[indexPath.row].images[0].src) {
@@ -277,7 +277,7 @@ extension MenuViewController: MenuInputDelegate{
     
     
     
-    func setupMenu(menu: [Menu]) {
+    func setupMenu(menu: [MenuForDisplay]) {
         self.menu = menu
         DispatchQueue.main.async {
             self.menuTableView.reloadData()

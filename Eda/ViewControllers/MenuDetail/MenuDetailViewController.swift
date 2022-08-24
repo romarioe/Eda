@@ -18,6 +18,7 @@ class MenuDetailViewController: UIViewController {
     var menuDetail: MenuDetail?
     var cartService = CartService()
     var selectedOption = ""
+    var price = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,7 @@ class MenuDetailViewController: UIViewController {
         
         detailName.text = menuDetail.name
         detailDescription.text = menuDetail.description
-        orderButton.setTitle("В корзину за "+menuDetail.price+"₽", for: .normal)
+        orderButton.setTitle("В корзину за "+menuDetail.price[0]+"₽", for: .normal)
     }
     
     
@@ -66,19 +67,56 @@ class MenuDetailViewController: UIViewController {
     
     
     @objc private func filterApply(segment: UISegmentedControl) -> Void {
+        guard let menuDetail = menuDetail else {return}
         switch segment.selectedSegmentIndex {
+        case 0:
+            let isIndexValid = menuDetail.price.indices.contains(0)
+            if isIndexValid {
+                orderButton.setTitle("В корзину за "+menuDetail.price[0]+"₽", for: .normal)
+                price = menuDetail.price[0]
+            }
+            
         case 1:
             selectedOption = segment.titleForSegment(at: 1) ?? ""
+            let isIndexValid = menuDetail.price.indices.contains(1)
+            if isIndexValid {
+                orderButton.setTitle("В корзину за "+menuDetail.price[1]+"₽", for: .normal)
+                price = menuDetail.price[1]
+            }
         case 2:
             selectedOption = segment.titleForSegment(at: 2) ?? ""
+            let isIndexValid = menuDetail.price.indices.contains(2)
+            if isIndexValid {
+                orderButton.setTitle("В корзину за "+menuDetail.price[2]+"₽", for: .normal)
+                price = menuDetail.price[2]
+            }
         case 3:
-            selectedOption = segment.titleForSegment(at: 3) ?? ""
+            
+            let isIndexValid = menuDetail.price.indices.contains(3)
+            if isIndexValid {
+                orderButton.setTitle("В корзину за "+menuDetail.price[3]+"₽", for: .normal)
+                price = menuDetail.price[3]
+            }
         case 4:
-            selectedOption = segment.titleForSegment(at: 4) ?? ""
+            
+            let isIndexValid = menuDetail.price.indices.contains(4)
+            if isIndexValid {
+                orderButton.setTitle("В корзину за "+menuDetail.price[4]+"₽", for: .normal)
+                price = menuDetail.price[4]
+            }
         case 5:
-            selectedOption = segment.titleForSegment(at: 5) ?? ""
+            
+            let isIndexValid = menuDetail.price.indices.contains(4)
+            if isIndexValid {
+                orderButton.setTitle("В корзину за "+menuDetail.price[5]+"₽", for: .normal)
+                price = menuDetail.price[5]
+            }
         case 6:
-            selectedOption = segment.titleForSegment(at: 6) ?? ""
+            let isIndexValid = menuDetail.price.indices.contains(6)
+            if isIndexValid {
+                orderButton.setTitle("В корзину за "+menuDetail.price[6]+"₽", for: .normal)
+                price = menuDetail.price[6]
+            }
         default:
             selectedOption = ""
         }
@@ -94,7 +132,8 @@ class MenuDetailViewController: UIViewController {
     @IBAction func addToCart(_ sender: Any) {
         let comment = selectedOption
         guard let menuDetail = menuDetail else {return}
-        guard let price = Int(menuDetail.price) else {return}
+        
+        guard let price = Int(self.price) else {return}
         cartService.addToCart(id: menuDetail.id, name: menuDetail.name, conut: 1, price: price, comment: comment, imageLink: menuDetail.imageLink)
     }
     

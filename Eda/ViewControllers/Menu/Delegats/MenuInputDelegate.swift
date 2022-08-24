@@ -9,6 +9,6 @@ import Foundation
 
 protocol MenuInputDelegate: AnyObject{
     func setupCategories(categories: [Categories])
-    func setupMenu(menu: [Menu])
+    func setupMenu(menu: [MenuForDisplay])
     func setupBage(value: String)
 }

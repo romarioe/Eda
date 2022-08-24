@@ -15,6 +15,18 @@ struct Menu: Decodable {
     let categories: [MenuCategories]
     let attributes: [Attributes]
     let price: String
+    let priceHTML: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case description
+        case images
+        case categories
+        case attributes
+        case price
+        case priceHTML = "price_html"
+    }
 }
 
 
